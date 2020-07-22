@@ -1,3 +1,6 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def index(request):
+    context = {'title': 'first post', 'content': 'this is the first post!'}
+    return render(request, 'blog/index.html', context)
