@@ -1,6 +1,9 @@
 from django.shortcuts import render
 
+from .models import Post
+
 
 def index(request):
-    context = {'title': 'first post', 'content': 'this is the first post!'}
+    posts = Post.objects.all().order_by('-created_at')
+    context = {'posts': posts}
     return render(request, 'blog/index.html', context)
