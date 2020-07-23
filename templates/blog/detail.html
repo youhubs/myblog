@@ -28,27 +28,7 @@
   <h3>Your Comments</h3>
   {% show_comment_form post %}
   <div class="comment-list-panel">
-    <h3>Total <span>2</span> comments</h3>
-    <ul class="comment-list list-unstyled">
-      <li class="comment-item">
-        <span class="nickname">zmrenwu</span>
-        <time class="submit-date" datetime="2012-11-09T23:15:57+00:00"
-          >2017-06-01 23:56</time
-        >
-        <div class="text">
-          Everythinkg is possible. You need try again。
-        </div>
-      </li>
-      <li class="comment-item">
-        <span class="nickname">TigerHu</span>
-        <time class="submit-date" datetime="2012-11-09T23:15:57+00:00"
-          >2012-11-09 12:56</time
-        >
-        <div class="text">
-          I like your post and learn a lot from your post. please work hard.
-        </div>
-      </li>
-    </ul>
+    {% show_comments post %}
   </div>
 </section>
 {% endblock main %} {% block toc %} {% if post.toc %}

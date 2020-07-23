@@ -1,4 +1,5 @@
 from django.db import models
+from blog.models import Post
 
 
 class Comment(models.Model):
@@ -7,7 +8,8 @@ class Comment(models.Model):
     url = models.URLField(blank=True)
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    post = models.ForeignKey('blog.Post', on_delete=models.CASCADE)
+    post = models.ForeignKey(
+        Post, on_delete=models.CASCADE, related_name='comments')
 
     def __str__(self) -> str:
         return '{}: {}'.format(self.name, self.text[:20])

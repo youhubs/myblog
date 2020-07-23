@@ -9,7 +9,6 @@ from .models import Post, Category, Tag
 
 
 def index(request):
-    print("######requset: ", request)
     posts = Post.objects.all().order_by('-created_at')
     context = {'posts': posts}
     return render(request, 'blog/index.html', context)
