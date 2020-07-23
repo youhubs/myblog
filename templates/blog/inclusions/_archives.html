@@ -3,7 +3,9 @@
   <ul>
     {% for date in dates %}
     <li>
-      <a href="#">{{ date.month }}, {{ date.year }} </a>
+      <a href="{% url 'posts:archive' date.year date.month %}"
+        >{{ date.year }}/{{ date.month }}
+      </a>
     </li>
     {% empty %} No Archives! {% endfor %}
   </ul>

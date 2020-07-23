@@ -3,7 +3,9 @@
   <ul>
     {% for category in categories %}
     <li>
-      <a href="#">{{ category.name }} <span class="post-count">(13)</span></a>
+      <a href="{% url 'posts:category' category.pk %}"
+        >{{ category.name }} <span class="post-count">(13)</span></a
+      >
     </li>
     {% empty %} No Categories! {% endfor %}
   </ul>
