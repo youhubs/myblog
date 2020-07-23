@@ -1,0 +1,10 @@
+<div class="widget widget-archives">
+  <h3 class="widget-title">Past Posts</h3>
+  <ul>
+    {% for date in dates %}
+    <li>
+      <a href="#">{{ date.month }}, {{ date.year }} </a>
+    </li>
+    {% empty %} No Archives! {% endfor %}
+  </ul>
+</div>
