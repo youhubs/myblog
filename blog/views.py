@@ -1,4 +1,8 @@
 import markdown
+import re
+
+from markdown.extensions.toc import TocExtension
+from django.utils.text import slugify
 from django.shortcuts import render, get_object_or_404
 
 from .models import Post
@@ -12,11 +16,15 @@ def index(request):
 
 def detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    post.content = markdown.markdown(post.content, extensions=[
+    md = markdown.Markdown(extensions=[
         'markdown.extensions.extra',
         'markdown.extensions.codehilite',
-        'markdown.extensions.toc',
+        TocExtension(slugify=slugify),
     ])
+    post.content = md.convert(post.content)
+
+    m = re.search(r'<div class="toc">\s*<ul>(.*)</ul>\s*</div>', md.toc, re.S)
+    post.toc = m.group(1) if m is not None else ''
     return render(request, 'blog/detail.html', context={'post': post})
 
 
