@@ -1,6 +1,7 @@
 import markdown
 import re
 from markdown.extensions.toc import TocExtension
+from pure_pagination.mixins import PaginationMixin
 
 from django.utils.text import slugify
 from django.shortcuts import get_object_or_404
@@ -9,7 +10,7 @@ from django.views.generic import ListView, DetailView
 from .models import Post, Category, Tag
 
 
-class IndexView(ListView):
+class IndexView(PaginationMixin, ListView):
     model = Post
     template_name = 'blog/index.html'
     context_object_name = 'posts'

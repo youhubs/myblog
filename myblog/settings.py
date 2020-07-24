@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
     'comments.apps.CommentsConfig',
+    'pure_pagination',
 ]
 
 MIDDLEWARE = [
@@ -120,3 +121,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# django-pure-pagination
+PAGINATION_SETTINGS = {
+    'PAGE_RANGE_DISPLAYED': 4,  # pages before and after current page
+    'MARGIN_PAGES_DISPLAYED': 2,  # pages for begin and end
+    'SHOW_FIRST_PAGE_WHEN_INVALID': True,
+}

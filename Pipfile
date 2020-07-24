@@ -10,6 +10,7 @@ autopep8 = "*"
 django = "*"
 markdown = "*"
 faker = "*"
+django-pure-pagination = "*"
 
 [requires]
 python_version = "3.6"
