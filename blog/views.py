@@ -4,8 +4,10 @@ from markdown.extensions.toc import TocExtension
 from pure_pagination.mixins import PaginationMixin
 
 from django.utils.text import slugify
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView, DetailView
+from django.contrib import messages
+from django.db.models import Q
 
 from .models import Post, Category, Tag
 
@@ -59,6 +61,16 @@ class PostDetailView(DetailView):
             r'<div class="toc">\s*<ul>(.*)</ul>\s*</div>', md.toc, re.S)
         post.toc = m.group(1) if m is not None else ''
         return post
+
+
+def search(request):
+    q = request.GET.get('query_item')
+    if not q:
+        error_msg = "Please input your search item!"
+        messages.add_message(request, messages.ERROR, error_msg, extra_tags='danger')
+        return redirect('posts:index')
+    posts = Post.objects.filter(Q(title__icontains=q) | Q(content__icontains=q))
+    return render(request, 'blog/index.html', {'posts': posts})
 
 
 if __name__ == "__main__":
