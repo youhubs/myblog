@@ -27,6 +27,7 @@ class Post(models.Model):
     tags = models.ManyToManyField(Tag, blank=True, related_name="posts")
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    views = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ['-created_at']
@@ -37,6 +38,10 @@ class Post(models.Model):
     @property
     def comments_count(self):
         return self.comments.count()
+
+    def increase_views(self):
+        self.views += 1
+        self.save(update_fields=['views'])
 
     def save(self, *args, **kwargs):
         md = markdown.Markdown(extensions=[
