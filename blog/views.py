@@ -9,7 +9,7 @@ from .models import Post, Category, Tag
 
 
 def index(request):
-    posts = Post.objects.all().order_by('-created_at')
+    posts = Post.objects.all()
     context = {'posts': posts}
     return render(request, 'blog/index.html', context)
 
@@ -30,19 +30,19 @@ def detail(request, pk):
 
 def archive(request, year, month):
     posts = Post.objects.filter(
-        created_at__year=year, created_at__month=month).order_by('-created_at')
+        created_at__year=year, created_at__month=month)
     return render(request, 'blog/index.html', context={'posts': posts})
 
 
 def category(request, pk):
     cate = get_object_or_404(Category, pk=pk)
-    posts = Post.objects.filter(category=cate).order_by('-created_at')
+    posts = Post.objects.filter(category=cate)
     return render(request, 'blog/index.html', context={'posts': posts})
 
 
 def tag(reques, pk):
     tag = get_object_or_404(Tag, pk=pk)
-    posts = Post.objects.filter(tags=tag).order_by('-created_at')
+    posts = Post.objects.filter(tags=tag)
     return render(reques, 'blog/index.html', context={'posts': posts})
 
 

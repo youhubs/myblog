@@ -29,6 +29,9 @@ class Post(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    class Meta:
+        ordering = ['-created_at']
+
     def __str__(self) -> str:
         return self.title
 
