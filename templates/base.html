@@ -1,4 +1,4 @@
-{% load static %} {% load blog_extras %}
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -67,34 +67,23 @@
         <div class="row">
           <div class="col-md-4 col-sm-5 col-xs-8">
             <div class="logo">
-              <h1>
-                <a href="{% url 'posts:index' %}"><b>ZERO</b> &amp; ONE</a>
-              </h1>
+              <h1><a href="{% url 'posts:index' %}"><b>ZERO</b> &amp; ONE</a></h1>
             </div>
           </div>
           <!-- col-md-4 -->
           <div class="col-md-8 col-sm-7 col-xs-4">
             <nav class="main-nav" role="navigation">
               <div class="navbar-header">
-                <button
-                  type="button"
-                  id="trigger-overlay"
-                  class="navbar-toggle"
-                >
-                  <span class="ion-navicon"></span>
-                </button>
+                <button type="button" id="trigger-overlay" class="navbar-toggle"><span class="ion-navicon"></span></button>
               </div>
 
-              <div
-                class="collapse navbar-collapse"
-                id="bs-example-navbar-collapse-1"
-              >
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                   <li class="cl-effect-11">
                     <a href="{% url 'posts:index' %}" data-hover="Home">Home</a>
                   </li>
                   <li class="cl-effect-11">
-                    <a href="full-width.html" data-hover="Blog">Blog</a>
+                    <a href="{% url 'posts:full_view' %}" data-hover="Blog">Blog</a>
                   </li>
                   <li class="cl-effect-11">
                     <a href="about.html" data-hover="About">About</a>
@@ -119,17 +108,10 @@
           <!-- col-md-8 -->
         </div>
       </header>
+      
       {% if messages %} {% for message in messages %}
-      <div
-        class="alert alert-{{ message.tags }} alert-dismissible"
-        role="alert"
-      >
-        <button
-          type="button"
-          class="close"
-          data-dismiss="alert"
-          aria-label="Close"
-        >
+      <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
         {{ message }}
@@ -139,30 +121,16 @@
 
     <div class="content-body">
       <div class="container">
-        <div class="row">
-          <main class="col-md-8">
-            {% block main %} {% endblock main %}
-          </main>
-          <aside class="col-md-4">
-            {% block toc %} {% endblock toc %}
-            <div>
-              {% show_recent_posts %} {% show_archives %} {% show_categories %}
-              {% show_tags %}
-            </div>
-            <div class="rss">
-              <a href=""><span class="ion-social-rss-outline"></span> RSS </a>
-            </div>
-          </aside>
-        </div>
+        {% block container %}    
+        {% endblock container %}
       </div>
     </div>
+
     <footer id="site-footer">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <p class="copyright">
-              &copy 2020 <a href="https://youhubs.com">@YouHubs</a>
-            </p>
+            <p class="copyright">&copy 2020 <a href="https://youhubs.com">@YouHubs</a></p>
           </div>
         </div>
       </div>
@@ -170,9 +138,7 @@
 
     <!-- Mobile Menu -->
     <div class="overlay overlay-hugeinc">
-      <button type="button" class="overlay-close">
-        <span class="ion-ios-close-empty"></span>
-      </button>
+      <button type="button" class="overlay-close"><span class="ion-ios-close-empty"></span></button>
       <nav>
         <ul>
           <li><a href="{% url 'posts:index' %}">Home</a></li>

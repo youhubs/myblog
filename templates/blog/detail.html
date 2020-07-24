@@ -1,45 +1,55 @@
-{% extends 'base.html' %} {% load comments_extras %} {% block main %}
-<article class="post post-{{ post.pk }}">
-  <header class="entry-header">
-    <h1 class="entry-title">{{ post.title }}</h1>
-    <div class="entry-meta">
-      <span class="post-category"
-        ><a href="#">{{ post.category.name }}</a></span
-      >
-      <span class="post-date"
-        ><a href="#"
-          ><time class="entry-date" datetime="{{ post.created_at }}"
-            >{{ post.created_at }}</time
-          ></a
-        ></span
-      >
-      <span class="post-author"><a href="#">{{ post.author }}</a></span>
-      <span class="comments-link"
-        ><a href="#">{{post.comments_count}} Reviews</a></span
-      >
-      <span class="views-count"><a href="#">{{ post.views }} Readings</a></span>
-    </div>
-  </header>
-  <div class="entry-content clearfix">
-    {{ post.content|safe }}
-  </div>
-</article>
+{% extends 'base.html' %} 
+{% load blog_extras %}
+{% load comments_extras %} 
 
-<section class="comment-area" id="comment-area">
-  <hr />
-  <h3>Your Comments</h3>
-  {% show_comment_form post %}
-  <div class="comment-list-panel">
-    {% show_comments post %}
-  </div>
-</section>
-{% endblock main %} {% block toc %} {% if post.toc %}
-<div class="widget widget-content">
-  <h3 class="widget-title">Table of Content</h3>
-  <div class="toc">
-    <ul>
-      {{ post.toc|safe }}
-    </ul>
-  </div>
+{% block container %}
+<div class="row">
+  <main class="col-md-8">
+    <article class="post post-{{ post.pk }}">
+      <header class="entry-header">
+        <h1 class="entry-title">{{ post.title }}</h1>
+        <div class="entry-meta">
+          <span class="post-category"><a href="#">{{ post.category.name }}</a></span>
+          <span class="post-date"><a href="#"><time class="entry-date" datetime="{{ post.created_at }}">{{ post.created_at }}</time></a></span>
+          <span class="post-author"><a href="#">{{ post.author }}</a></span>
+          <span class="comments-link"><a href="#">{{post.comments_count}} Reviews</a></span>
+          <span class="views-count"><a href="#">{{ post.views }} Readings</a></span>
+        </div>
+      </header>
+      <div class="entry-content clearfix">
+        {{ post.content|safe }}
+      </div>
+    </article>
+    
+    <section class="comment-area" id="comment-area">
+      <hr />
+      <h3>Your Comments</h3>
+      {% show_comment_form post %}
+      <div class="comment-list-panel">
+        {% show_comments post %}
+      </div>
+    </section>
+  </main>
+
+  <aside id="aside" class="col-md-4">
+    <div>
+      {% if post.toc %}
+      <div class="widget widget-content">
+        <h3 class="widget-title">Table of Content</h3>
+        <div class="toc">
+          <ul>{{ post.toc|safe }}</ul>
+        </div>
+      </div>
+      {% endif %} 
+      {% show_recent_posts %} 
+      {% show_archives %} 
+      {% show_categories %}
+      {% show_tags %}
+    </div>
+    <div class="rss">
+      <a href=""><span class="ion-social-rss-outline"></span> RSS </a>
+    </div>
+  </aside>
 </div>
-{% endif %} {% endblock toc %}
+
+{% endblock container %}

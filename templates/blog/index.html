@@ -1,44 +1,48 @@
-{% extends 'base.html' %} {% block main %} {% for post in posts %}
-<article class="post post-{{ post.pk }}">
-  <header class="entry-header">
-    <h1 class="entry-title">
-      <a href="{% url 'posts:detail' post.pk %}">{{ post.title }}</a>
-    </h1>
-    <div class="entry-meta">
-      <span class="post-category"
-        ><a href="{% url 'posts:category' post.category.pk %}"
-          >{{ post.category.name }}</a
-        ></span
-      >
-      <span class="post-date"
-        ><a
-          href="{% url 'posts:archive' post.created_at.year post.created_at.month %}"
-          ><time class="entry-date" datetime="{{ post.created_at }}"
-            >{{ post.created_at }}</time
-          ></a
-        ></span
-      >
-      <span class="post-author"><a href="#">{{ post.author }}</a></span>
-      <span class="comments-link"
-        ><a href="#">{{post.comments_count}} Comments</a></span
-      >
-      <span class="views-count"><a href="#">{{ post.views }} Readings</a></span>
-    </div>
-  </header>
-  <div class="entry-content clearfix">
-    <p>{{post.abstract}}</p>
-    <div class="read-more cl-effect-14">
-      <a href="{% url 'posts:detail' post.pk %}" class="more-link"
-        >Continue... <span class="meta-nav">→</span></a
-      >
-    </div>
-  </div>
-</article>
-{% empty %}
-<div class="no-post">Currently No Published Posts！</div>
-{% endfor %}
+{% extends 'base.html' %}  
+{% load blog_extras %}
 
-<div class="pagination">
-  {% if is_paginated %} {{ page_obj.render }} {% endif %}
+{% block container %}
+<div class="row">
+  <main class="col-md-8">
+    {% for post in posts %}
+    <article class="post post-{{ post.pk }}">
+      <header class="entry-header">
+        <h1 class="entry-title"><a href="{% url 'posts:detail' post.pk %}">{{ post.title }}</a></h1>
+        <div class="entry-meta">
+          <span class="post-category"><a href="{% url 'posts:category' post.category.pk %}">{{ post.category.name }}</a></span>
+          <span class="post-date"><a href="{% url 'posts:archive' post.created_at.year post.created_at.month %}"
+            ><time class="entry-date" datetime="{{ post.created_at }}">{{ post.created_at }}</time></a></span>
+          <span class="post-author"><a href="#">{{ post.author }}</a></span>
+          <span class="comments-link"><a href="#">{{post.comments_count}} Comments</a></span>
+          <span class="views-count"><a href="#">{{ post.views }} Readings</a></span>
+        </div>
+      </header>
+      <div class="entry-content clearfix">
+        <p>{{post.abstract}}</p>
+        <div class="read-more cl-effect-14">
+          <a href="{% url 'posts:detail' post.pk %}" class="more-link">Continue... <span class="meta-nav">→</span></a>
+        </div>
+      </div>
+    </article>
+    {% empty %}
+    <div class="no-post">Currently No Published Posts！</div>
+    {% endfor %}
+
+    <div class="pagination">
+      {% if is_paginated %} {{ page_obj.render }} {% endif %}
+    </div>
+  </main>
+
+  <aside id="aside" class="col-md-4">
+    <div>
+      {% show_recent_posts %} 
+      {% show_archives %} 
+      {% show_categories %}
+      {% show_tags %}
+    </div>
+    <div class="rss">
+      <a href="#"><span class="ion-social-rss-outline"></span> RSS </a>
+    </div>
+  </aside>
 </div>
-{% endblock main %}
+{% endblock container %}

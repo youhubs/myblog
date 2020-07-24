@@ -11,4 +11,5 @@ urlpatterns = [
     path('tags/<int:pk>', views.TagView.as_view(), name='tag'),
     path('posts/<int:pk>/', views.PostDetailView.as_view(), name='detail'),
     path('search/', views.search, name='search'),
+    path('full_view/', views.FullView.as_view(), name='full_view'),
 ]

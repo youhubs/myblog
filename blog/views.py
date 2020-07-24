@@ -19,6 +19,13 @@ class IndexView(PaginationMixin, ListView):
     paginate_by = 5
 
 
+class FullView(PaginationMixin, ListView):
+    model = Post
+    template_name = 'blog/full_view.html'
+    context_object_name = 'posts'
+    paginate_by = 5
+
+
 class ArchiveView(IndexView):
     def get_queryset(self):
         year = self.kwargs.get('year')
