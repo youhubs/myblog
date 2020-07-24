@@ -1,5 +1,6 @@
 from django import template
 from django.db.models.aggregates import Count
+from django.db.models.functions import ExtractYear, ExtractMonth
 
 from ..models import Post, Category, Tag
 
@@ -15,8 +16,11 @@ def show_recent_posts(context, num=5):
 
 @register.inclusion_tag('blog/inclusions/_archives.html', takes_context=True)
 def show_archives(context):
+    dates = Post.objects.annotate(year=ExtractYear(
+        'created_at'), month=ExtractMonth('created_at')).values(
+            'year', 'month').order_by('year', 'month').annotate(num_posts=Count('id'))
     return {
-        'dates': Post.objects.dates('created_at', 'month', order='DESC'),
+        'dates': dates,
     }
 
 
