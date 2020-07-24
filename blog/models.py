@@ -1,4 +1,3 @@
-
 import markdown
 from django.db import models
 from django.contrib.auth.models import User
@@ -25,7 +24,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now_add=True)
     abstract = models.CharField(max_length=200, blank=True)
-    tags = models.ManyToManyField(Tag, blank=True, related_name="tags")
+    tags = models.ManyToManyField(Tag, blank=True, related_name="posts")
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -34,6 +33,10 @@ class Post(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+    @property
+    def comments_count(self):
+        return self.comments.count()
 
     def save(self, *args, **kwargs):
         md = markdown.Markdown(extensions=[

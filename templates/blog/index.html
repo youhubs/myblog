@@ -6,17 +6,22 @@
     </h1>
     <div class="entry-meta">
       <span class="post-category"
-        ><a href="#">{{ post.category.name }}</a></span
+        ><a href="{% url 'posts:category' post.category.pk %}"
+          >{{ post.category.name }}</a
+        ></span
       >
       <span class="post-date"
-        ><a href="#"
+        ><a
+          href="{% url 'posts:archive' post.created_at.year post.created_at.month %}"
           ><time class="entry-date" datetime="{{ post.created_at }}"
             >{{ post.created_at }}</time
           ></a
         ></span
       >
       <span class="post-author"><a href="#">{{ post.author }}</a></span>
-      <span class="comments-link"><a href="#">4 Reviews</a></span>
+      <span class="comments-link"
+        ><a href="#">{{post.comments_count}} Comments</a></span
+      >
       <span class="views-count"><a href="#">588 Readings</a></span>
     </div>
   </header>
