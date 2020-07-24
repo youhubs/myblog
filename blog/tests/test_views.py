@@ -74,6 +74,7 @@ class CategoryViewTestCase(BlogDataTestCase):
 
 
 class PostDetailViewTestCase(BlogDataTestCase):
+    
     def setUp(self):
         super().setUp()
         self.md_post = Post.objects.create(
@@ -104,15 +105,6 @@ class PostDetailViewTestCase(BlogDataTestCase):
         self.client.get(self.url)
         self.md_post.refresh_from_db()
         self.assertEqual(self.md_post.views, 2)
- 
-    def test_markdownify_post_body_and_set_toc(self):
-        response = self.client.get(self.url)
-        self.assertContains(response, 'title')
-        self.assertContains(response, self.md_post.title)
- 
-        post_template_var = response.context['post']
-        self.assertHTMLEqual(post_template_var.body_html, "<h1 id='title'>title</h1>")
-        self.assertHTMLEqual(post_template_var.toc, '<li><a href="#title">title</li>')
 
 
 if __name__ == "__main__":
