@@ -3,7 +3,7 @@
   <ul>
     {% for tag in tags %}
     <li>
-      <a href="{% url 'posts:tag' tag.pk %}">{{ tag.name }}</a>
+      <a href="{% url 'posts:tag' tag.pk %}">{{ tag.name }}<span class="post-count">({{tag.num_posts}})</span></a>
     </li>
     {% empty %} No Tags! {% endfor %}
   </ul>
