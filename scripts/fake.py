@@ -5,7 +5,6 @@ import sys
 from datetime import timedelta
 
 import django
-from django.apps import apps
 from django.utils import timezone
 
 import faker
@@ -24,9 +23,6 @@ if __name__ == "__main__":
     from comments.models import Comment
     from django.contrib.auth.models import User
 
-    # 取消实时索引生成，因为本地运行 fake 脚本时可能并未启动 Elasticsearch 服务。
-    # apps.get_app_config("haystack").signal_processor.teardown()
-
     print("clean database")
     Post.objects.all().delete()
     Category.objects.all().delete()
@@ -38,7 +34,7 @@ if __name__ == "__main__":
     user = User.objects.create_superuser(
         "admin", "admin@github.com", "admin")
 
-    category_list = ["学习笔记", "开源项目", "工具资源", "生活感悟"]
+    category_list = ["Note Book", "Open Source", "Java Tips", "Python Tips"]
     tag_list = [
         "django",
         "Python",
@@ -61,11 +57,11 @@ if __name__ == "__main__":
 
     print("create a markdown sample post")
     Post.objects.create(
-        title="Markdown与代码高亮测试",
+        title="Markdown and font highlight",
         content=pathlib.Path(BASE_DIR)
         .joinpath("scripts", "md.sample")
         .read_text(encoding="utf-8"),
-        category=Category.objects.create(name="Markdown测试"),
+        category=Category.objects.create(name="Markdown"),
         author=user,
     )
 
@@ -89,24 +85,24 @@ if __name__ == "__main__":
         post.tags.add(tag1, tag2)
         post.save()
 
-    fake = faker.Faker("zh_CN")
-    for _ in range(100):  # Chinese
-        tags = Tag.objects.order_by("?")
-        tag1 = tags.first()
-        tag2 = tags.last()
-        cate = Category.objects.order_by("?").first()
-        created_at = fake.date_time_between(
-            start_date="-1y", end_date="now", tzinfo=timezone.get_current_timezone()
-        )
-        post = Post.objects.create(
-            title=fake.sentence().rstrip("."),
-            content="\n\n".join(fake.paragraphs(10)),
-            created_at=created_at,
-            category=cate,
-            author=user,
-        )
-        post.tags.add(tag1, tag2)
-        post.save()
+    # fake = faker.Faker("zh_CN")
+    # for _ in range(100):  # Chinese
+    #     tags = Tag.objects.order_by("?")
+    #     tag1 = tags.first()
+    #     tag2 = tags.last()
+    #     cate = Category.objects.order_by("?").first()
+    #     created_at = fake.date_time_between(
+    #         start_date="-1y", end_date="now", tzinfo=timezone.get_current_timezone()
+    #     )
+    #     post = Post.objects.create(
+    #         title=fake.sentence().rstrip("."),
+    #         content="\n\n".join(fake.paragraphs(10)),
+    #         created_at=created_at,
+    #         category=cate,
+    #         author=user,
+    #     )
+    #     post.tags.add(tag1, tag2)
+    #     post.save()
 
     print("create some comments")
     for post in Post.objects.all()[:20]:
