@@ -8,8 +8,11 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
 from django.db.models import Q
+from django.core.mail import send_mail, BadHeaderError
+from django.shortcuts import render, redirect
 
 from .models import Post, Category, Tag
+from .forms import ContactForm
 
 
 class IndexView(PaginationMixin, ListView):
@@ -85,7 +88,23 @@ def about(request):
 
 
 def contact(request):
-    return render(request, 'blog/contact.html')
+    if request.method == 'GET':
+        form = ContactForm()
+    else:
+        form = ContactForm(request.POST)
+        msg = 'Success! Thank you for your message.'
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            subject = form.cleaned_data['subject']
+            from_email = form.cleaned_data['from_email']
+            message = form.cleaned_data['message']
+            try:
+                send_mail(subject, message, from_email, ['huxy99@yahoo.com'])
+            except BadHeaderError:
+                msg = 'Invalid header found.'
+                messages.add_message(request, messages.ERROR, msg, extra_tags='danger')
+            messages.add_message(request, messages.SUCCESS, msg, extra_tags='success')
+    return render(request, "blog/contact.html", {'form': form})
 
 
 if __name__ == "__main__":

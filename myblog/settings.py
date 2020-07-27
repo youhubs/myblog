@@ -154,3 +154,7 @@ try:
   from .local_settings import *
 except Exception as e:
   pass
+
+# sending emails
+DEFAULT_FROM_EMAIL = 'w3clinics@gmail.com'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
