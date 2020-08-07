@@ -10,11 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 import os
-import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -82,6 +80,10 @@ DATABASES = {
     }
 }
 
+import dj_database_url
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
+DATABASES['default']['CONN_MAX_AGE'] = 500
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -138,22 +140,12 @@ PAGINATION_SETTINGS = {
 }
 
 
+import django_heroku
 django_heroku.settings(locals())
 
 
-# Parse database configuration from $DATABASE_URL
-import dj_database_url
-
-DATABASES = { 'default' : dj_database_url.config()}
-
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-# try to load local_settings.py if it exists
-try:
-  from .local_settings import *
-except Exception as e:
-  pass
 
 # sending emails
 DEFAULT_FROM_EMAIL = 'w3clinics@gmail.com'
