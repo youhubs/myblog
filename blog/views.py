@@ -17,14 +17,14 @@ from .forms import ContactForm
 
 class IndexView(PaginationMixin, ListView):
     model = Post
-    template_name = 'blog/index.html'
+    template_name = 'index.html'
     context_object_name = 'posts'
     paginate_by = 5
 
 
 class FullView(PaginationMixin, ListView):
     model = Post
-    template_name = 'blog/full_view.html'
+    template_name = 'full_view.html'
     context_object_name = 'posts'
     paginate_by = 5
 
@@ -50,7 +50,7 @@ class TagView(IndexView):
 
 class PostDetailView(DetailView):
     model = Post
-    template_name = 'blog/detail.html'
+    template_name = 'detail.html'
     context_object_name = 'post'
 
     def get(self, request, *args, **kwargs):
@@ -80,11 +80,11 @@ def search(request):
         messages.add_message(request, messages.ERROR, error_msg, extra_tags='danger')
         return redirect('posts:index')
     posts = Post.objects.filter(Q(title__icontains=q) | Q(content__icontains=q))
-    return render(request, 'blog/index.html', {'posts': posts})
+    return render(request, 'index.html', {'posts': posts})
 
 
 def about(request):
-    return render(request, 'blog/about.html')
+    return render(request, 'about.html')
 
 
 def contact(request):
@@ -104,7 +104,7 @@ def contact(request):
                 msg = 'Invalid header found.'
                 messages.add_message(request, messages.ERROR, msg, extra_tags='danger')
             messages.add_message(request, messages.SUCCESS, msg, extra_tags='success')
-    return render(request, "blog/contact.html", {'form': form})
+    return render(request, "contact.html", {'form': form})
 
 
 if __name__ == "__main__":

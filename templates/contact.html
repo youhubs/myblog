@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	{% include "components/head.html" %}
+
+	<body id="page">
+		<div class="container">	
+			{% include "components/header.html" %}
+		</div>
+
+		{% if messages %} {% for message in messages %}
+		<div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		  {{ message }}
+		</div>
+		{% endfor %} {% endif %}
+	    </div>
+
+		<div class="content-body">
+			<div class="container">
+				<div class="row">
+					<main class="col-md-12">
+						<h1 class="page-title">Contact Me</h1>
+						<article class="post">
+							<div class="entry-content clearfix">
+								<form action="#" method="post" class="contact-form">
+									{% csrf_token %}
+									<div class="row">
+										<div class="col-md-8 col-md-offset-2">
+											{{ form.as_p }}
+											<div class="form-actions">
+												<button type="submit">Send</button>
+											</div>
+										</div>
+									</div>	<!-- row -->
+								</form>
+							</div>
+						</article>
+					</main>
+				</div>
+			</div>
+		</div>
+		
+		{% include "components/footer.html" %}
+
+		<!-- Mobile Menu -->
+		<div class="overlay overlay-hugeinc">
+			<button type="button" class="overlay-close"><span class="ion-ios-close-empty"></span></button>
+			<nav>
+				<ul>
+					<li><a href="{% url 'posts:index' %}">Home</a></li>
+					<li><a href="{% url 'posts:full_view' %}">Blog</a></li>
+					<li><a href="{% url 'posts:about' %}">About</a></li>
+					<li><a href="{% url 'posts:contact' %}">Contact</a></li>
+				</ul>
+			</nav>
+		</div>
+
+		<script src="{% static 'js/script.js' %}"></script>
+		
+	</body>
+</html>

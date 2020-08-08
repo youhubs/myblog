@@ -16,7 +16,7 @@ def comment(request, post_pk):
         comment.save()
         messages.add_message(request, messages.SUCCESS,
                              'Comments completed!', extra_tags='success')
-        return render(request, 'blog/detail.html', context={'post': post})
+        return render(request, 'detail.html', context={'post': post})
     context = {
         'post': post,
         'form': form,
