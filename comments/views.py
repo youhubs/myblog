@@ -1,3 +1,7 @@
+import markdown
+from markdown.extensions.toc import TocExtension
+
+from django.utils.text import slugify
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
 from django.contrib import messages
@@ -9,6 +13,12 @@ from .forms import CommentForm
 @require_POST
 def comment(request, post_pk):
     post = get_object_or_404(Post, pk=post_pk)
+    md = markdown.Markdown(extensions=[
+            'markdown.extensions.extra',
+            'markdown.extensions.codehilite',
+            TocExtension(slugify=slugify),
+        ])
+    post.content = md.convert(post.content)
     form = CommentForm(request.POST)
     if form.is_valid():
         comment = form.save(commit=False)
