@@ -6,18 +6,20 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0002_auto_20200723_2017'),
+        ("blog", "0002_auto_20200723_2017"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='post',
-            name='views',
+            model_name="post",
+            name="views",
             field=models.PositiveIntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name='post',
-            name='tags',
-            field=models.ManyToManyField(blank=True, related_name='posts', to='blog.Tag'),
+            model_name="post",
+            name="tags",
+            field=models.ManyToManyField(
+                blank=True, related_name="posts", to="blog.Tag"
+            ),
         ),
     ]

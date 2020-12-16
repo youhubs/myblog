@@ -5,9 +5,8 @@ import sys
 from datetime import timedelta
 
 import django
-from django.utils import timezone
-
 import faker
+from django.utils import timezone
 
 # add project path
 back = os.path.dirname
@@ -31,8 +30,7 @@ if __name__ == "__main__":
     User.objects.all().delete()
 
     print("create a blog user")
-    user = User.objects.create_superuser(
-        "admin", "admin@github.com", "admin")
+    user = User.objects.create_superuser("admin", "admin@github.com", "admin")
 
     category_list = ["Note Book", "Open Source", "Java Tips", "Python Tips"]
     tag_list = [
@@ -107,8 +105,7 @@ if __name__ == "__main__":
     print("create some comments")
     for post in Post.objects.all()[:20]:
         post_created_at = post.created_at
-        delta_in_days = "-" + \
-            str((timezone.now() - post_created_at).days) + "d"
+        delta_in_days = "-" + str((timezone.now() - post_created_at).days) + "d"
         for _ in range(random.randrange(3, 15)):
             Comment.objects.create(
                 name=fake.name(),

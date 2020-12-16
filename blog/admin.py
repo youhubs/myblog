@@ -1,10 +1,11 @@
 from django.contrib import admin
-from .models import Category, Tag, Post
+
+from .models import Category, Post, Tag
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['title', 'created_at', 'modified_at', 'category', 'author']
-    fields = ['title', 'content', 'abstract', 'category', 'tags']
+    list_display = ["title", "created_at", "modified_at", "category", "author"]
+    fields = ["title", "content", "abstract", "category", "tags"]
 
     def save_model(self, request, obj, form, change):
         obj.author = request.user

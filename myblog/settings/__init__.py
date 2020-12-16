@@ -2,5 +2,5 @@ from .production import *
 
 try:
     from .local import *
-except:
+except ModuleNotFoundError:
     pass
